@@ -11,4 +11,10 @@ class RoomsController < ApplicationController
       @new_room.broadcast_append_to :rooms, partial: "rooms/room", locals: { room: @new_room }, target: "rooms"
     end
   end
+
+  def show
+    @room = Room.find_by!(title: params[:title])
+    @messages = @room.messages
+    @new_message = current_user&.messages&.build
+  end
 end
