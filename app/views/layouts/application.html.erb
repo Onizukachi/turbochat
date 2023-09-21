@@ -53,6 +53,23 @@
       </header>
       <main>
         <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+
+          <% if notice.present? %>
+            <div class="text-sm text-green-800 dark:text-green-400">
+              <div class="p-4 mb-4 inline-block rounded-lg bg-green-50 dark:bg-gray-800" role="notice">
+                <%= notice %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if alert.present? %>
+            <div class="text-sm text-red-800 dark:text-red-400 text-center">
+              <div class="p-4 mb-4 inline-block rounded-lg bg-red-50 dark:bg-gray-800" role="alert">
+                <%= alert %>
+              </div>
+            </div>
+          <% end %>
+
           <%= yield %>
         </div>
       </main>
