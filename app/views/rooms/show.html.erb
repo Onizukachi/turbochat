@@ -1,16 +1,18 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg h-96" id='chat-container'>
   <div class="w-full text-sm text-gray-500 dark:text-gray-400">
-    <div class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 flex">
+    <div class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 flex">
       <div class="w-1/12 px-6 py-3">Time</div>
       <div class="w-2/12 px-6 py-3">Email</div>
       <div class="w-8/12 px-6 py-3">Message</div>
       <div class="w-1/12 px-6 py-3">Like count</div>
     </div>
-    <%= turbo_frame_tag :messages do %>
-      <%= render @messages %>
-    <% end %>
+    <div>
+      <%= turbo_frame_tag :messages do %>
+        <%= render partial: "messages/message", collection:  @messages, locals: { user: current_user} %>
+      <% end %>
+    </div>
     
-    <%= form_with model: @new_message do |f| %>
+    <%= form_with model: @new_message, data: {controller: "chat_refresh", action: "turbo:submit-end->chat_refresh#clearInput"} do |f| %>
       <div>
         <div class="mt-2">
           <%= f.text_field :body, autofocus: true, required: true, placeholder: 'Text here', class: "px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
