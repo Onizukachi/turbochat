@@ -1,10 +1,17 @@
-<div class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 flex">
-  <div class="w-1/12 flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-    <div class="font-normal text-gray-500 text-sm"><%= l(message.created_at, format: :short) %></div>
+<%= turbo_frame_tag message do %>
+  <div class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 flex">
+    <div class="w-1/12 flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+      <div class="font-normal text-gray-500 text-sm"><%= l(message.created_at, format: :short) %></div>
+    </div>
+    <div class="w-2/12 px-6 py-4"><%= message.user.email %></div>
+    <div class="w-8/12 px-6 py-4"><%= message.body %></div>
+    <div class="w-1/12 px-6 py-4 flex">
+      <%= button_to show_like(message), likes_path, 
+                    params: {message_id: message.id} %>
+      <p class='pl-2'><%= show_like_count(message) %></p>
+    </div>
   </div>
-  <div class="w-2/12 px-6 py-4"><%= message.user.email %></div>
-  <div class="w-8/12 px-6 py-4"><%= message.body %></div>
-  <div class="w-1/12 px-6 py-4"><%= likes_count(message, user) %></div>
-</div>
+  <%= turbo_stream_from message %>
+<% end %>
 
 
